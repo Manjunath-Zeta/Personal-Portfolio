@@ -67,21 +67,6 @@ export default async function Home() {
               </Button>
             </div>
 
-            {/* Stats Section */}
-            <div className="grid grid-cols-3 gap-8 pt-12 md:pt-16 max-w-xl">
-              <div className="space-y-1 border-r border-white/10 pr-4">
-                <div className="text-2xl md:text-4xl font-black text-primary">5+</div>
-                <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest leading-tight">Experiences</div>
-              </div>
-              <div className="space-y-1 border-r border-white/10 pr-4">
-                <div className="text-2xl md:text-4xl font-black text-primary">20+</div>
-                <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest leading-tight">Project done</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-2xl md:text-4xl font-black text-primary">80+</div>
-                <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest leading-tight">Happy Clients</div>
-              </div>
-            </div>
           </div>
 
           {/* Large Circular Image */}
