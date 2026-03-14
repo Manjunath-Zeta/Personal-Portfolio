@@ -24,7 +24,14 @@ export function Footer() {
           </a>
           .
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
+          <Link
+            href="/admin"
+            className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            Admin Login
+          </Link>
+          <div className="flex items-center gap-4">
           <a
             href="https://github.com"
             target="_blank"
