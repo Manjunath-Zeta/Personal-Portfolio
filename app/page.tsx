@@ -1,24 +1,35 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
+import { createClient } from "@/lib/supabase/server"
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient()
+  const { data: profile } = await supabase.from("profile_info").select("*").single()
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] px-4 text-center">
       <div className="space-y-6 max-w-3xl">
         <div className="relative mx-auto h-32 w-32 md:h-40 md:w-40 overflow-hidden rounded-full border-4 border-primary/10 shadow-lg">
-          {/* Default Profile Placeholder */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-primary/10 to-transparent flex items-center justify-center text-4xl font-bold text-primary/40">
-            Me
-          </div>
+          {profile?.profile_image_url ? (
+            <img src={profile.profile_image_url} alt={profile.full_name} className="h-full w-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-primary/10 to-transparent flex items-center justify-center text-4xl font-bold text-primary/40">
+              {profile?.full_name?.charAt(0) || "M"}
+            </div>
+          )}
         </div>
         
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          Hi, I&apos;m a <span className="text-primary border-b-4 border-primary/20">Software Engineer</span>
+          Hi, I&apos;m <span className="text-primary border-b-4 border-primary/20">{profile?.full_name || "Manjunath"}</span>
         </h1>
         
         <p className="mx-auto max-w-[700px] text-lg text-muted-foreground sm:text-xl">
-          I build modern, scalable, and exceptional digital experiences. Passionate about web technologies, AI, and continuous learning.
+          {profile?.headline || "Senior Software Engineer / Payment Specialist"}
+        </p>
+        
+        <p className="mx-auto max-w-[700px] text-base text-muted-foreground line-clamp-3">
+          {profile?.bio || "I build modern, scalable, and exceptional digital experiences."}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -35,18 +46,24 @@ export default function Home() {
         </div>
 
         <div className="flex items-center justify-center gap-6 pt-8">
-          <Link href="https://github.com" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors group">
-            <Github className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
-            <span className="sr-only">GitHub</span>
-          </Link>
-          <Link href="https://linkedin.com" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors group">
-            <Linkedin className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
-            <span className="sr-only">LinkedIn</span>
-          </Link>
-          <Link href="mailto:hello@example.com" className="text-muted-foreground hover:text-foreground transition-colors group">
-            <Mail className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
-            <span className="sr-only">Email</span>
-          </Link>
+          {profile?.github_url && (
+            <Link href={profile.github_url} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors group">
+              <Github className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
+              <span className="sr-only">GitHub</span>
+            </Link>
+          )}
+          {profile?.linkedin_url && (
+            <Link href={profile.linkedin_url} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors group">
+              <Linkedin className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
+              <span className="sr-only">LinkedIn</span>
+            </Link>
+          )}
+          {profile?.email && (
+            <Link href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors group">
+              <Mail className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
+              <span className="sr-only">Email</span>
+            </Link>
+          )}
         </div>
       </div>
     </div>
