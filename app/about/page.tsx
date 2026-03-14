@@ -24,24 +24,24 @@ export default async function AboutPage() {
         </p>
       </div>
 
-      <div className="mt-20 grid gap-16 lg:grid-cols-12">
-        <div className="lg:col-span-7 space-y-8">
+      <div className="mt-20 space-y-20">
+        <div className="max-w-4xl space-y-8">
           <div className="space-y-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-white border-l-4 border-primary pl-6">My Journey</h2>
+            <h2 className="text-2xl md:text-3xl font-black text-white border-l-4 border-primary pl-6 uppercase tracking-tight">My Journey</h2>
             <div className="space-y-6 text-lg text-muted-foreground/90 leading-relaxed whitespace-pre-wrap pl-7">
               {profile?.bio || "I am a passionate software engineer..."}
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-5 space-y-8">
+        <div className="max-w-4xl space-y-8">
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-black text-white border-l-4 border-primary pl-6 uppercase tracking-tight">Skills & Expertise</h2>
-            <div className="flex flex-wrap gap-3 pl-7">
+            <div className="flex flex-wrap gap-4 pl-7">
               {skills?.map((skill) => (
                 <div
                   key={skill.id}
-                  className="rounded-xl border border-white/5 bg-secondary/10 backdrop-blur-md px-5 py-3 text-sm font-black shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:scale-105 uppercase tracking-wider"
+                  className="rounded-xl border border-white/5 bg-secondary/10 backdrop-blur-md px-6 py-3 text-sm font-black shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:scale-105 uppercase tracking-wider"
                 >
                   {skill.name}
                 </div>
