@@ -13,7 +13,7 @@ export default async function AdminSkillsPage() {
   const { data: skills, error } = await supabase
     .from("skills")
     .select("*")
-    .order("created_at", { ascending: false })
+    .order("created_at", { ascending: true })
 
   async function addSkill(formData: FormData) {
     "use server"
