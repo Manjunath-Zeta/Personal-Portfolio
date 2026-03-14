@@ -48,3 +48,34 @@ export async function deleteProject(id: string) {
   revalidatePath("/admin/projects")
   revalidatePath("/projects")
 }
+
+export async function updateProject(id: string, formData: FormData) {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Not authenticated")
+
+  const technologiesStr = formData.get("technologies") as string
+  const technologies = technologiesStr ? technologiesStr.split(",").map((tech) => tech.trim()) : []
+
+  const updatedProject = {
+    title: formData.get("title"),
+    short_description: formData.get("short_description"),
+    full_description: formData.get("full_description") || null,
+    github_url: formData.get("github_url") || null,
+    live_url: formData.get("live_url") || null,
+    image_url: formData.get("image_url") || null,
+    technologies: technologies,
+    featured: formData.get("featured") === "on",
+  }
+
+  const { error } = await supabase.from("projects").update(updatedProject).eq("id", id)
+
+  if (error) {
+    console.error(error)
+    throw new Error("Failed to update project")
+  }
+
+  revalidatePath("/admin/projects")
+  revalidatePath("/projects")
+}

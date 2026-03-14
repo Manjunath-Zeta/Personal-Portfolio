@@ -46,3 +46,32 @@ export async function deleteExperience(id: string) {
   revalidatePath("/admin/experience")
   revalidatePath("/experience")
 }
+
+export async function updateExperience(id: string, formData: FormData) {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Not authenticated")
+
+  const current = formData.get("current") === "on"
+
+  const updatedExp = {
+    company: formData.get("company"),
+    role: formData.get("role"),
+    location: formData.get("location") || null,
+    start_date: formData.get("start_date"),
+    end_date: current ? null : formData.get("end_date"),
+    current,
+    description: formData.get("description"),
+  }
+
+  const { error } = await supabase.from("experience").update(updatedExp).eq("id", id)
+
+  if (error) {
+    console.error(error)
+    throw new Error("Failed to update experience")
+  }
+
+  revalidatePath("/admin/experience")
+  revalidatePath("/experience")
+}
