@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "A selection of my recent work.",
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsPage() {
   const supabase = await createClient()
   const { data: projects } = await supabase.from("projects").select("*").order("featured", { ascending: false }).order("created_at", { ascending: false })

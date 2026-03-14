@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "About my professional background and skills.",
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
   const supabase = await createClient()
   const { data: profile } = await supabase.from("profile_info").select("*").single()

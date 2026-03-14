@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const supabase = await createClient()
   const { data: profile } = await supabase.from("profile_info").select("*").single()

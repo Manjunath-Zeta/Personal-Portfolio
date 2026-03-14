@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "My professional certifications and degrees.",
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function CertificationsPage() {
   const supabase = await createClient()
   const { data: certifications } = await supabase.from("certifications").select("*").order("issue_date", { ascending: false })

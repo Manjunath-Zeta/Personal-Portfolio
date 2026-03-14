@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "My professional experience and work history.",
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function ExperiencePage() {
   const supabase = await createClient()
   const { data: experiences } = await supabase
