@@ -2,6 +2,9 @@ export const metadata = {
   title: "Admin Dashboard | Portfolio",
 };
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export default function AdminDashboardPage() {
   return (
     <div className="space-y-6">
