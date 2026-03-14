@@ -29,7 +29,9 @@ export default async function ProjectsPage() {
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {projects?.map((project) => (
-          <Card key={project.id} className="flex flex-col h-full group bg-secondary/30 border-white/5 hover:border-primary/20 transition-all duration-300 rounded-2xl overflow-hidden">
+          <Card key={project.id} className="flex flex-col h-full group bg-secondary/10 backdrop-blur-md border-white/5 hover:border-primary/20 transition-all duration-300 rounded-2xl overflow-hidden relative">
+            {/* Hover Glow Accent */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative aspect-video overflow-hidden">
               {project.image_url ? (
                 <img src={project.image_url} alt={project.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />

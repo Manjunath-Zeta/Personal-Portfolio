@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { addExperience, updateExperience } from "./actions"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { X } from "lucide-react"
+import { ImageUpload } from "@/components/admin/image-upload"
 
 interface ExperienceFormProps {
   initialData?: any
@@ -16,8 +17,10 @@ interface ExperienceFormProps {
 export function ExperienceForm({ initialData, onCancel }: ExperienceFormProps) {
   const isEditing = !!initialData
   const [isCurrent, setIsCurrent] = React.useState(initialData?.current || false)
+  const [logoUrl, setLogoUrl] = React.useState(initialData?.company_logo_url || "")
 
   const handleSubmit = async (formData: FormData) => {
+    // Hidden field doesn't always work with action if set via JS, so we append manually or use a hidden input
     if (isEditing) {
       await updateExperience(initialData.id, formData)
     } else {
@@ -43,6 +46,15 @@ export function ExperienceForm({ initialData, onCancel }: ExperienceFormProps) {
       </CardHeader>
       <CardContent>
         <form action={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Company Logo</label>
+            <ImageUpload 
+              value={logoUrl} 
+              onChange={setLogoUrl} 
+              onRemove={() => setLogoUrl("")} 
+            />
+            <input type="hidden" name="company_logo_url" value={logoUrl} />
+          </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Company</label>
             <Input name="company" required defaultValue={initialData?.company || ""} placeholder="Tech Corp" />

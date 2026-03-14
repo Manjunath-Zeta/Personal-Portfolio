@@ -31,6 +31,7 @@ create table public.experience (
   current boolean default false,
   description text,
   achievements text[],
+  company_logo_url text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );

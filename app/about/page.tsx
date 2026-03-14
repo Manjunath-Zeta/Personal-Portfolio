@@ -36,12 +36,12 @@ export default async function AboutPage() {
 
         <div className="lg:col-span-5 space-y-8">
           <div className="space-y-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-white border-l-4 border-primary pl-6">Skills & Expertise</h2>
+            <h2 className="text-2xl md:text-3xl font-black text-white border-l-4 border-primary pl-6 uppercase tracking-tight">Skills & Expertise</h2>
             <div className="flex flex-wrap gap-3 pl-7">
               {skills?.map((skill) => (
                 <div
                   key={skill.id}
-                  className="rounded-xl border border-white/10 bg-secondary/50 px-5 py-3 text-sm font-bold shadow-sm transition-all hover:border-primary/50 hover:bg-primary/10 hover:text-primary hover:scale-105"
+                  className="rounded-xl border border-white/5 bg-secondary/10 backdrop-blur-md px-5 py-3 text-sm font-black shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:scale-105 uppercase tracking-wider"
                 >
                   {skill.name}
                 </div>

@@ -20,6 +20,7 @@ export async function addExperience(formData: FormData) {
     end_date: current ? null : formData.get("end_date"),
     current,
     description: formData.get("description"),
+    company_logo_url: formData.get("company_logo_url") || null,
   }
 
   const { error } = await supabase.from("experience").insert(newExp)
@@ -63,6 +64,7 @@ export async function updateExperience(id: string, formData: FormData) {
     end_date: current ? null : formData.get("end_date"),
     current,
     description: formData.get("description"),
+    company_logo_url: formData.get("company_logo_url") || null,
   }
 
   const { error } = await supabase.from("experience").update(updatedExp).eq("id", id)
