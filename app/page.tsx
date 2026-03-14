@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
+import { CldImage } from "next-cloudinary"
 
 export const dynamic = "force-dynamic";
 
@@ -96,9 +97,13 @@ export default async function Home() {
               
               <div className="w-full h-full rounded-full overflow-hidden border-[12px] border-white/5 shadow-2xl relative group">
                 {profile?.profile_image_url ? (
-                  <img 
+                  <CldImage
                     src={profile.profile_image_url} 
-                    alt={profile.full_name} 
+                    alt={profile.full_name || "Profile"} 
+                    width={1000}
+                    height={1000}
+                    crop="fill"
+                    gravity="face"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" 
                   />
                 ) : (
