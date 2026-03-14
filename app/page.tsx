@@ -59,9 +59,6 @@ export default async function Home() {
             </div>
 
             <div className="flex flex-wrap gap-6 pt-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold h-14 px-10 rounded-xl text-lg transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
-                <Link href="/contact">Hire Me</Link>
-              </Button>
               <Button variant="outline" size="lg" className="border-white/20 hover:border-white/40 text-white font-bold h-14 px-10 rounded-xl text-lg backdrop-blur-sm transition-all hover:bg-white/5">
                 <Link href="/resume">Download CV</Link>
               </Button>

@@ -49,15 +49,6 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center">
-          <Button 
-            className="bg-primary hover:bg-primary/90 text-white font-bold px-8 rounded-lg transition-all hover:scale-105"
-            asChild
-          >
-            <Link href="/contact">Hire Me</Link>
-          </Button>
-        </div>
-
         <div className="flex md:hidden ml-auto items-center space-x-4">
           <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)} className="text-white">
             <Menu className="h-6 w-6" />
@@ -80,7 +71,6 @@ export function Navbar() {
               {item.name}
             </Link>
           ))}
-          <Button className="w-full bg-primary font-bold py-6">Hire Me</Button>
         </div>
       )}
     </nav>
