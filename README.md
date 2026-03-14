@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Modern Personal Portfolio
 
-## Getting Started
+A sleek, responsive, and fully customizable personal portfolio application built with Next.js 15, Tailwind CSS v4, and Supabase.
 
-First, run the development server:
+## Features
 
+- **Modern UI**: Clean, professional design with Framer Motion page transitions.
+- **Dark/Light Mode**: Full theme support via `next-themes`.
+- **Database Driven**: Experience, Projects, Certifications, Skills, and Achievements are powered by Supabase.
+- **Admin Dashboard**: Secure, hidden admin area to add, edit, and delete your portfolio items.
+- **SEO Optimized**: Pre-configured metadata exports for all pages.
+
+## Tech Stack
+
+- **Framework**: Next.js App Router
+- **Styling**: Tailwind CSS v4
+- **Database / Auth**: Supabase
+- **Animation**: Framer Motion
+- **Icons**: Lucide React
+
+## Setup Instructions
+
+### 1. Clone & Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository>
+cd personal-portfolio
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Supabase Setup
+1. Create a new project at [Supabase](https://supabase.com/).
+2. Go to the SQL Editor in your Supabase dashboard.
+3. Copy the contents of `schema.sql` from this repository and run it. This will create all the necessary tables and Row Level Security (RLS) policies.
+4. Go to Authentication -> Providers and make sure Email/Password is enabled.
+5. Create an initial user account manually in Authentication -> Users to access the dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Environment Variables
+Copy the example environment file:
+```bash
+cp .env.example .env.local
+```
+Fill in your Supabase URL and Anon Key from your Supabase Project Settings -> API.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view your site.
+Go to [http://localhost:3000/login](http://localhost:3000/login) and log in with the user account you created to start adding content.
 
-## Learn More
+## Deployment to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1. Push your code to a GitHub repository.
+2. Import the project into Vercel.
+3. Add your `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` as Environment Variables in Vercel.
+4. Deploy!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Customization
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Colors**: Modify `app/globals.css` to change the CSS variables for different theming.
+- **Structure**: Edit the navigation links in `components/navbar.tsx` and `app/admin/layout.tsx`.
