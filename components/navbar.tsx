@@ -27,7 +27,7 @@ export function Navbar() {
         <div className="flex items-center gap-12 flex-1">
           <Link href="/" className="flex items-center space-x-2 group">
             <span className="text-2xl font-black tracking-tighter text-primary group-hover:opacity-90 transition-all">
-              LOGO
+              {/* Logo text removed as per user request */}
             </span>
           </Link>
           
