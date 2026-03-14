@@ -10,66 +10,104 @@ export default async function Home() {
   const { data: profile } = await supabase.from("profile_info").select("*").single()
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] px-4">
-      <div className="space-y-8 max-w-4xl w-full">
-        <div className="flex flex-col items-center space-y-6">
-          <div className="relative h-32 w-32 md:h-40 md:w-40 overflow-hidden rounded-2xl border-2 border-primary/5 shadow-xl ring-8 ring-primary/5">
-            {profile?.profile_image_url ? (
-              <img src={profile.profile_image_url} alt={profile.full_name} className="h-full w-full object-cover" />
-            ) : (
-              <div className="absolute inset-0 bg-secondary flex items-center justify-center text-4xl font-bold text-primary/20">
-                {profile?.full_name?.charAt(0) || "M"}
-              </div>
-            )}
-          </div>
+    <div className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl -z-10" />
+
+      <div className="container mx-auto px-4 md:px-8 py-12 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          <div className="space-y-4 text-center">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl">
-              Hi, I&apos;m <span className="text-primary">{profile?.full_name || "Manjunath"}</span>
-            </h1>
-            
-            <p className="mx-auto max-w-2xl text-xl font-medium text-muted-foreground sm:text-2xl">
-              {profile?.headline || "Senior Software Engineer / Payment Specialist"}
-            </p>
+          {/* Text Content */}
+          <div className="lg:col-span-12 xl:col-span-12 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-10 order-2 lg:order-1">
+            <div className="space-y-4">
+              <span className="text-xl md:text-2xl font-semibold text-muted-foreground/80 tracking-wide mb-2 block">
+                Hi I am
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                {profile?.full_name || "Manjunath U K"}
+              </h2>
+              <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-[0.9] uppercase">
+                <span className="text-primary block mb-2">UI/UX</span>
+                <span className="text-white">Designer</span>
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-6">
+              {[
+                { icon: <Github className="h-5 w-5" />, url: profile?.github_url },
+                { icon: <Linkedin className="h-5 w-5" />, url: profile?.linkedin_url },
+                { icon: <Mail className="h-5 w-5" />, url: `mailto:${profile?.email}` },
+              ].map((social, idx) => (
+                social.url && (
+                  <Link 
+                    key={idx}
+                    href={social.url} 
+                    target="_blank"
+                    className="p-3 rounded-full border border-white/10 text-muted-foreground hover:text-primary hover:border-primary/30 transition-all hover:bg-primary/5"
+                  >
+                    {social.icon}
+                  </Link>
+                )
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-6 pt-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold h-14 px-10 rounded-xl text-lg transition-transform hover:scale-105 active:scale-95 shadow-lg shadow-primary/20">
+                <Link href="/contact">Hire Me</Link>
+              </Button>
+              <Button variant="outline" size="lg" className="border-white/20 hover:border-white/40 text-white font-bold h-14 px-10 rounded-xl text-lg backdrop-blur-sm transition-all hover:bg-white/5">
+                <Link href="/resume">Download CV</Link>
+              </Button>
+            </div>
+
+            {/* Stats Section */}
+            <div className="grid grid-cols-3 gap-8 pt-12 md:pt-16 max-w-xl">
+              <div className="space-y-1 border-r border-white/10 pr-4">
+                <div className="text-2xl md:text-4xl font-black text-primary">5+</div>
+                <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest leading-tight">Experiences</div>
+              </div>
+              <div className="space-y-1 border-r border-white/10 pr-4">
+                <div className="text-2xl md:text-4xl font-black text-primary">20+</div>
+                <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest leading-tight">Project done</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-2xl md:text-4xl font-black text-primary">80+</div>
+                <div className="text-xs md:text-sm text-muted-foreground font-medium uppercase tracking-widest leading-tight">Happy Clients</div>
+              </div>
+            </div>
           </div>
-        </div>
-        
-        <p className="mx-auto max-w-2xl text-lg text-muted-foreground/80 leading-relaxed text-center">
-          {profile?.bio || "I build modern, scalable, and exceptional digital experiences."}
-        </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <Button asChild size="lg" className="h-12 px-8 rounded-full shadow-md group">
-            <Link href="/projects">
-              View Work <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="h-12 px-8 rounded-full">
-            <Link href="/contact">
-              Contact Me
-            </Link>
-          </Button>
-        </div>
-
-        <div className="flex items-center justify-center gap-6 pt-8">
-          {profile?.github_url && (
-            <Link href={profile.github_url} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors group">
-              <Github className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
-              <span className="sr-only">GitHub</span>
-            </Link>
-          )}
-          {profile?.linkedin_url && (
-            <Link href={profile.linkedin_url} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors group">
-              <Linkedin className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
-              <span className="sr-only">LinkedIn</span>
-            </Link>
-          )}
-          {profile?.email && (
-            <Link href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors group">
-              <Mail className="h-6 w-6 group-hover:-translate-y-1 transition-transform" />
-              <span className="sr-only">Email</span>
-            </Link>
-          )}
+          {/* Large Circular Image */}
+          <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative">
+            <div className="relative w-72 h-72 md:w-[500px] md:h-[500px]">
+              {/* Outer Background Circle */}
+              <div className="absolute inset-0 bg-white/5 rounded-full -z-10 animate-pulse" />
+              
+              <div className="w-full h-full rounded-full overflow-hidden border-[12px] border-white/5 shadow-2xl relative group">
+                {profile?.profile_image_url ? (
+                  <img 
+                    src={profile.profile_image_url} 
+                    alt={profile.full_name} 
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" 
+                  />
+                ) : (
+                  <div className="w-full h-full bg-secondary flex items-center justify-center text-8xl font-black text-primary/20">
+                    {profile?.full_name?.charAt(0) || "M"}
+                  </div>
+                )}
+                
+                {/* Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              
+              {/* Small floating accents linked to the reference image feel */}
+              <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary/20 rounded-full blur-xl" />
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
+            </div>
+          </div>
+          </div>
         </div>
       </div>
     </div>

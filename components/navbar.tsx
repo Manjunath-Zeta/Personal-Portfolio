@@ -22,22 +22,25 @@ export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center px-4 md:px-8">
-        <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2 font-bold tracking-tight hover:opacity-80 transition-opacity">
-            Portfolio
+    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-20 items-center px-4 md:px-8">
+        <div className="flex items-center gap-12 flex-1">
+          <Link href="/" className="flex items-center space-x-2 group">
+            <span className="text-2xl font-black tracking-tighter text-primary group-hover:opacity-90 transition-all">
+              LOGO
+            </span>
           </Link>
-          <div className="flex items-center space-x-6 text-sm font-medium">
-            {navItems.map((item) => (
+          
+          <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
+            {navItems.slice(0, 5).map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
                 className={cn(
-                  "transition-colors hover:text-primary relative py-1",
+                  "transition-all hover:text-primary relative py-1",
                   pathname === item.path 
-                    ? "text-primary font-semibold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-primary after:rounded-full" 
-                    : "text-muted-foreground"
+                    ? "text-primary font-bold" 
+                    : "text-muted-foreground hover:translate-y-[-1px]"
                 )}
               >
                 {item.name}
@@ -45,32 +48,39 @@ export function Navbar() {
             ))}
           </div>
         </div>
-        <div className="flex md:hidden w-full justify-between items-center">
-          <Link href="/" className="font-bold tracking-tight">Portfolio</Link>
-          <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
-            <Menu className="h-5 w-5" />
+
+        <div className="hidden md:flex items-center">
+          <Button 
+            className="bg-primary hover:bg-primary/90 text-white font-bold px-8 rounded-lg transition-all hover:scale-105"
+            asChild
+          >
+            <Link href="/contact">Hire Me</Link>
           </Button>
         </div>
-        <div className="ml-auto flex items-center space-x-4">
-          <ThemeToggle />
+
+        <div className="flex md:hidden ml-auto items-center space-x-4">
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)} className="text-white">
+            <Menu className="h-6 w-6" />
+          </Button>
         </div>
       </div>
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="md:hidden border-t p-4 flex flex-col space-y-4 bg-background">
+        <div className="md:hidden border-t border-border/40 p-6 flex flex-col space-y-6 bg-background/95 backdrop-blur animate-in slide-in-from-top-4 duration-200">
           {navItems.map((item) => (
             <Link
               key={item.path}
               href={item.path}
               onClick={() => setIsOpen(false)}
               className={cn(
-                "block text-sm font-medium transition-colors hover:text-foreground/80",
-                pathname === item.path ? "text-foreground" : "text-foreground/60"
+                "text-lg font-medium transition-colors",
+                pathname === item.path ? "text-primary" : "text-muted-foreground"
               )}
             >
               {item.name}
             </Link>
           ))}
+          <Button className="w-full bg-primary font-bold py-6">Hire Me</Button>
         </div>
       )}
     </nav>

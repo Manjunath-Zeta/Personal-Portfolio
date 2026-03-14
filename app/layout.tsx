@@ -33,11 +33,11 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen flex-col bg-background font-sans antialiased">
+          <div className="flex min-h-screen flex-col bg-background font-sans antialiased text-white selection:bg-primary/30">
             <Navbar />
             <main className="flex-1">
               <PageTransition>{children}</PageTransition>
