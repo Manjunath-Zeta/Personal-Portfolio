@@ -117,3 +117,4 @@ export default async function AdminCertificationsPage() {
   )
 }
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';

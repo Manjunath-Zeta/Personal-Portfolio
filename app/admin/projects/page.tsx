@@ -106,3 +106,4 @@ export default async function AdminProjectsPage() {
   )
 }
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';

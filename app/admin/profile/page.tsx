@@ -100,3 +100,4 @@ export default async function AdminProfilePage() {
   )
 }
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';

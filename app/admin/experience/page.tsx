@@ -106,3 +106,4 @@ export default async function AdminExperiencePage() {
   )
 }
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';

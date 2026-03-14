@@ -116,3 +116,4 @@ export default async function AdminAchievementsPage() {
   )
 }
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
