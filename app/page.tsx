@@ -29,8 +29,17 @@ export default async function Home() {
                 {profile?.full_name || "Manjunath U K"}
               </h2>
               <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-[0.9] uppercase">
-                <span className="text-primary block mb-2">UI/UX</span>
-                <span className="text-white">Designer</span>
+                {profile?.headline ? (
+                  <>
+                    <span className="text-primary block mb-2">{profile.headline.split(' ')[0]}</span>
+                    <span className="text-white">{profile.headline.split(' ').slice(1).join(' ')}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-primary block mb-2">UI/UX</span>
+                    <span className="text-white">Designer</span>
+                  </>
+                )}
               </h1>
             </div>
 
