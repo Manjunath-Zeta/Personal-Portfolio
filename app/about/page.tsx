@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function AboutPage() {
   const supabase = await createClient()
   const { data: profile } = await supabase.from("profile_info").select("*").single()
-  const { data: skills } = await supabase.from("skills").select("*").order("category")
+  const { data: skills } = await supabase.from("skills").select("*").order("name")
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-8 lg:py-24 max-w-6xl">

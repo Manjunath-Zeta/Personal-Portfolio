@@ -24,7 +24,7 @@ export default async function AdminSkillsPage() {
     await sb.from("skills").insert({
       user_id: user.id,
       name: formData.get("name"),
-      category: formData.get("category"),
+      category: "General", // Default value since we're removing the field
     })
     revalidatePath("/admin/skills")
     revalidatePath("/about")
@@ -57,10 +57,6 @@ export default async function AdminSkillsPage() {
                   <label className="text-sm font-medium">Skill Name</label>
                   <Input name="name" required placeholder="React, Python, etc." />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Category</label>
-                  <Input name="category" required placeholder="Frontend, Backend, Tools" />
-                </div>
                 <Button type="submit" className="w-full">Add Skill</Button>
               </form>
             </CardContent>
@@ -81,7 +77,6 @@ export default async function AdminSkillsPage() {
                 <Card key={skill.id} className="relative group p-4 flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-sm">{skill.name}</p>
-                    <p className="text-xs text-muted-foreground">{skill.category}</p>
                   </div>
                   <form action={async () => {
                     "use server"
