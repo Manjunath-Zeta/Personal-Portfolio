@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useFormStatus } from "react-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -13,15 +14,27 @@ interface ProfileFormProps {
   updateProfile: (formData: FormData) => Promise<void>
 }
 
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? "Saving..." : "Save Changes"}
+    </Button>
+  )
+}
+
 export function ProfileForm({ profile, userId, updateProfile }: ProfileFormProps) {
   const [imageUrl, setImageUrl] = React.useState(profile?.profile_image_url || "")
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    formData.append("profile_image_url", imageUrl)
-    await updateProfile(formData)
-    alert("Profile updated successfully!")
+  const handleAction = async (formData: FormData) => {
+    formData.set("profile_image_url", imageUrl)
+    try {
+      await updateProfile(formData)
+      alert("Profile updated successfully!")
+    } catch (error) {
+      console.error(error)
+      alert("Failed to update profile. Check console for details.")
+    }
   }
 
   return (
@@ -30,7 +43,9 @@ export function ProfileForm({ profile, userId, updateProfile }: ProfileFormProps
         <CardTitle>Basic Information</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form action={handleAction} className="space-y-6">
+          <input type="hidden" name="profile_image_url" value={imageUrl} />
+          
           <div className="space-y-2">
             <label className="text-sm font-medium">Profile Picture</label>
             <ImageUpload 
@@ -77,7 +92,7 @@ export function ProfileForm({ profile, userId, updateProfile }: ProfileFormProps
             </div>
           </div>
 
-          <Button type="submit">Save Changes</Button>
+          <SubmitButton />
         </form>
       </CardContent>
     </Card>

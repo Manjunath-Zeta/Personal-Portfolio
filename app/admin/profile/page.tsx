@@ -35,8 +35,15 @@ export default async function AdminProfilePage() {
       profile_image_url: formData.get("profile_image_url"),
     }
 
+    console.log("Updating profile with:", updates)
+
     const { error } = await sb.from("profile_info").upsert(updates)
-    if (error) console.error(error)
+    if (error) {
+      console.error("Supabase Error:", error)
+      throw error
+    } else {
+      console.log("Profile updated successfully in DB")
+    }
 
     revalidatePath("/admin/profile")
     revalidatePath("/")
@@ -45,9 +52,14 @@ export default async function AdminProfilePage() {
 
   return (
     <div className="space-y-8 max-w-3xl">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Profile & About</h1>
-        <p className="text-muted-foreground">Update your personal information used across the site.</p>
+      <div className="flex justify-between items-end">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Profile & About</h1>
+          <p className="text-muted-foreground">Update your personal information used across the site.</p>
+        </div>
+        <div className="text-[10px] text-muted-foreground font-mono bg-muted px-2 py-1 rounded">
+          ID: {user.id}
+        </div>
       </div>
 
       <ProfileForm 
