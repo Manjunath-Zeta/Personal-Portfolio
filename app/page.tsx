@@ -1,14 +1,18 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
-import { CldImage } from "next-cloudinary"
+import { ProfileImage } from "@/components/profile-image"
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const supabase = await createClient()
   const { data: profile } = await supabase.from("profile_info").select("*").single()
+
+  const headlineParts = profile?.headline?.trim()?.split(/\s+/) || ["UI/UX", "Designer"]
+  const firstWord = headlineParts[0]
+  const otherWords = headlineParts.slice(1).join(" ")
 
   return (
     <div className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center overflow-hidden">
@@ -30,17 +34,8 @@ export default async function Home() {
                 {profile?.full_name || "Manjunath U K"}
               </h2>
               <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-[0.9] uppercase">
-                {profile?.headline ? (
-                  <>
-                    <span className="text-primary block mb-2">{profile.headline.split(' ')[0]}</span>
-                    <span className="text-white">{profile.headline.split(' ').slice(1).join(' ')}</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-primary block mb-2">UI/UX</span>
-                    <span className="text-white">Designer</span>
-                  </>
-                )}
+                <span className="text-primary block mb-2">{firstWord}</span>
+                <span className="text-white">{otherWords}</span>
               </h1>
             </div>
 
@@ -97,14 +92,9 @@ export default async function Home() {
               
               <div className="w-full h-full rounded-full overflow-hidden border-[12px] border-white/5 shadow-2xl relative group">
                 {profile?.profile_image_url ? (
-                  <CldImage
+                  <ProfileImage
                     src={profile.profile_image_url} 
                     alt={profile.full_name || "Profile"} 
-                    width={1000}
-                    height={1000}
-                    crop="fill"
-                    gravity="face"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" 
                   />
                 ) : (
                   <div className="w-full h-full bg-secondary flex items-center justify-center text-8xl font-black text-primary/20">

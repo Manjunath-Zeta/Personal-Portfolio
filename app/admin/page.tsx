@@ -1,15 +1,13 @@
 import { createClient } from "@/lib/supabase/server"
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminDashboardPage() {
   const supabase = await createClient()
 
-  // Fetch counts from all tables
-  const [
-    { count: experienceCount },
-    { count: projectsCount },
-    { count: certsCount },
-    { count: skillsCount }
-  ] = await Promise.all([
+  // Fetch counts from all tables with individual error handling
+  const [experienceRes, projectsRes, certsRes, skillsRes] = await Promise.all([
     supabase.from("experience").select("*", { count: 'exact', head: true }),
     supabase.from("projects").select("*", { count: 'exact', head: true }),
     supabase.from("certifications").select("*", { count: 'exact', head: true }),
@@ -17,10 +15,10 @@ export default async function AdminDashboardPage() {
   ])
 
   const stats = [
-    { label: 'Experience', count: experienceCount || 0 },
-    { label: 'Projects', count: projectsCount || 0 },
-    { label: 'Certifications', count: certsCount || 0 },
-    { label: 'Skills', count: skillsCount || 0 },
+    { label: 'Experience', count: experienceRes.count || 0 },
+    { label: 'Projects', count: projectsRes.count || 0 },
+    { label: 'Certifications', count: certsRes.count || 0 },
+    { label: 'Skills', count: skillsRes.count || 0 },
   ]
 
   return (
