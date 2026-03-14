@@ -105,3 +105,4 @@ export default async function AdminExperiencePage() {
     </div>
   )
 }
+export const dynamic = 'force-dynamic';

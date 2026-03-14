@@ -100,3 +100,4 @@ export default async function AdminSkillsPage() {
     </div>
   )
 }
+export const dynamic = 'force-dynamic';

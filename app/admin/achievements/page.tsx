@@ -115,3 +115,4 @@ export default async function AdminAchievementsPage() {
     </div>
   )
 }
+export const dynamic = 'force-dynamic';

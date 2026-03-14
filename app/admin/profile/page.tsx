@@ -99,3 +99,4 @@ export default async function AdminProfilePage() {
     </div>
   )
 }
+export const dynamic = 'force-dynamic';

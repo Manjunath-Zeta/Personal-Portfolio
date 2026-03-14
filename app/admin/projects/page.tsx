@@ -105,3 +105,4 @@ export default async function AdminProjectsPage() {
     </div>
   )
 }
+export const dynamic = 'force-dynamic';

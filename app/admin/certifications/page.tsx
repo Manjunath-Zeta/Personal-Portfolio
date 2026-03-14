@@ -116,3 +116,4 @@ export default async function AdminCertificationsPage() {
     </div>
   )
 }
+export const dynamic = 'force-dynamic';
