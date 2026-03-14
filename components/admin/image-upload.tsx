@@ -19,8 +19,27 @@ export function ImageUpload({
   onRemove,
   className
 }: ImageUploadProps) {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+
   const onUpload = (result: any) => {
-    onChange(result.info.secure_url)
+    if (result.event === "success") {
+      onChange(result.info.secure_url)
+    }
+  }
+
+  const handleRemove = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    onRemove()
+  }
+
+  if (!cloudName && !value) {
+    return (
+      <div className="p-4 border-2 border-dashed border-destructive/20 rounded-2xl bg-destructive/5 text-destructive text-sm flex items-center gap-2">
+        <X className="h-4 w-4" />
+        Cloudinary Cloud Name missing. Check environment variables.
+      </div>
+    )
   }
 
   return (
@@ -32,11 +51,14 @@ export function ImageUpload({
               src={value}
               alt="Upload"
               className="h-full w-full object-cover"
+              onError={(e) => {
+                console.error("Image load error:", e)
+              }}
             />
             <button
-              onClick={onRemove}
+              onClick={handleRemove}
               type="button"
-              className="absolute right-2 top-2 rounded-full bg-destructive p-1 text-destructive-foreground shadow-sm hover:opacity-80 transition-opacity"
+              className="absolute right-2 top-2 rounded-full bg-destructive p-1 text-destructive-foreground shadow-sm hover:opacity-80 transition-opacity z-10"
             >
               <X className="h-4 w-4" />
             </button>
@@ -47,17 +69,14 @@ export function ImageUpload({
             uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "portfolio_unsigned"}
             options={{
               maxFiles: 1,
-              folder: "portfolio_uploads"
+              folder: "portfolio_uploads",
+              clientAllowedFormats: ["png", "jpeg", "jpg", "webp"],
             }}
           >
             {({ open }) => {
-              const onClick = () => {
-                open()
-              }
-
               return (
                 <div 
-                  onClick={onClick}
+                  onClick={() => open?.()}
                   className="flex h-40 w-40 cursor-pointer flex-col items-center justify-center space-y-2 rounded-2xl border-2 border-dashed border-muted-foreground/25 bg-muted/50 transition-colors hover:bg-muted/80"
                 >
                   <div className="rounded-full bg-background p-3 shadow-sm">
